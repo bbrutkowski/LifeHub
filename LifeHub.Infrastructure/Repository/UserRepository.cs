@@ -1,5 +1,4 @@
-﻿using LifeHub.Application.DTOs;
-using LifeHub.Application.Interfaces;
+﻿using LifeHub.Application.Interfaces;
 using LifeHub.Database;
 using LifeHub.Domain.Entity;
 using Microsoft.EntityFrameworkCore;
@@ -21,14 +20,9 @@ namespace LifeHub.Infrastructure.Repository
             return await _db.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
         }
 
-        public Task<User?> GetById(Guid id, CancellationToken cancellationToken = default)
+        public async Task<User?> GetById(Guid id, CancellationToken cancellationToken = default)
         {
-            return _db.Users.FindAsync([new[] { id }, cancellationToken], cancellationToken: cancellationToken).AsTask();
-        }
-
-        public Task<User?> GetByUsername(string username, CancellationToken cancellationToken = default)
-        {
-            return _db.Users.FirstOrDefaultAsync(u => u.Username == username, cancellationToken);
+            return await _db.Users.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
         public async Task Update(User user, CancellationToken cancellationToken = default)
@@ -37,10 +31,9 @@ namespace LifeHub.Infrastructure.Repository
             await SaveChanges(cancellationToken);
         }
 
-        private Task SaveChanges(CancellationToken cancellationToken = default)
+        private async Task SaveChanges(CancellationToken cancellationToken = default)
         {
-            _db.SaveChangesAsync(cancellationToken);
-            return Task.CompletedTask;
+            await _db.SaveChangesAsync(cancellationToken);
         }
     }
 }
