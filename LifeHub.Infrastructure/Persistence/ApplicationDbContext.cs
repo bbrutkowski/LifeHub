@@ -1,7 +1,7 @@
 ﻿using LifeHub.Domain.Entity;
 using Microsoft.EntityFrameworkCore;
 
-namespace LifeHub.Database
+namespace LifeHub.Infrastructure.Persistence
 {
     public class ApplicationDbContext : DbContext
     {

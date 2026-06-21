@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.37111.16 d17.14
+VisualStudioVersion = 17.14.37111.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifeHub.Api", "LifeHub.Api\LifeHub.Api.csproj", "{F8A2BD6C-F305-4C7C-840A-4E341E31DD2A}"
 EndProject
@@ -10,8 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifeHub.Domain", "LifeHub.Domain\LifeHub.Domain.csproj", "{FF6184B0-3FEB-4021-95F6-0DAD92DD208E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifeHub.Infrastructure", "LifeHub.Infrastructure\LifeHub.Infrastructure.csproj", "{2206703D-E45D-4A14-87F5-69C4C5CE9B23}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifeHub.Database", "LifeHub.Database\LifeHub.Database.csproj", "{17EDCA61-9C39-49E2-9431-14801B526C3E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifeHub.Tests", "LifeHub.Tests\LifeHub.Tests.csproj", "{235E0B75-1623-4EF6-8D29-0D47DD6D7F85}"
 EndProject
@@ -37,10 +35,6 @@ Global
 		{2206703D-E45D-4A14-87F5-69C4C5CE9B23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2206703D-E45D-4A14-87F5-69C4C5CE9B23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2206703D-E45D-4A14-87F5-69C4C5CE9B23}.Release|Any CPU.Build.0 = Release|Any CPU
-		{17EDCA61-9C39-49E2-9431-14801B526C3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{17EDCA61-9C39-49E2-9431-14801B526C3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{17EDCA61-9C39-49E2-9431-14801B526C3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{17EDCA61-9C39-49E2-9431-14801B526C3E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{235E0B75-1623-4EF6-8D29-0D47DD6D7F85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{235E0B75-1623-4EF6-8D29-0D47DD6D7F85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{235E0B75-1623-4EF6-8D29-0D47DD6D7F85}.Release|Any CPU.ActiveCfg = Release|Any CPU

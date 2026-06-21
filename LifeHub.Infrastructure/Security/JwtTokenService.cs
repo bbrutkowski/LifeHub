@@ -1,4 +1,4 @@
-﻿using LifeHub.Application.Interfaces;
+﻿using LifeHub.Application.Interfaces.Services;
 using LifeHub.Domain.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

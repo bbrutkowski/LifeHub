@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace LifeHub.Database
+namespace LifeHub.Infrastructure.Persistence
 {
     public static class DatabaseServiceCollectionExtensions
     {

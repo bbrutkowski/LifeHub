@@ -1,6 +1,6 @@
 ﻿using LifeHub.Domain.Entity;
 
-namespace LifeHub.Application.Interfaces
+namespace LifeHub.Application.Interfaces.Repositories
 {
     public interface IUserRepository
     {

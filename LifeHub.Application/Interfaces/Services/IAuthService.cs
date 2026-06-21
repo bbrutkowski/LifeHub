@@ -1,6 +1,6 @@
 ﻿using LifeHub.Application.DTOs;
 
-namespace LifeHub.Application.Interfaces
+namespace LifeHub.Application.Interfaces.Services
 {
     public interface IAuthService
     {

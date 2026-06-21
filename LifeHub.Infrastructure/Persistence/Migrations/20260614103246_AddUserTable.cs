@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace LifeHub.Database.Migrations
+namespace LifeHub.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class AddUserTable : Migration

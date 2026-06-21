@@ -1,5 +1,5 @@
 ﻿using LifeHub.Application.DTOs;
-using LifeHub.Application.Interfaces;
+using LifeHub.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LifeHub.Api.Controllers
@@ -25,6 +25,13 @@ namespace LifeHub.Api.Controllers
             if (authResult is null) return Unauthorized(new { message = "Invalid credentials" });
 
             return Ok(authResult);
+        }
+
+        [HttpPost("resetPassword")]
+        public async Task<IActionResult> ResetPassword([FromBody] ForgotPasswordRequest request, CancellationToken cancellationToken)
+        {
+            await _userService.SendPasswordResetEmail(request.Email, cancellationToken);
+            return Ok();
         }
     }
 }
