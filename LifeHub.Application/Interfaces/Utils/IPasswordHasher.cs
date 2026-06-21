@@ -1,4 +1,4 @@
-﻿namespace LifeHub.Application.Interfaces
+﻿namespace LifeHub.Application.Interfaces.Utils
 {
     public interface IPasswordHasher
     {

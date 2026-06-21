@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Design;
 using System.Text.Json;
 
-namespace LifeHub.Database
+namespace LifeHub.Infrastructure.Persistence
 {
     public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
     {

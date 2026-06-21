@@ -1,5 +1,7 @@
 ﻿using LifeHub.Application.DTOs;
-using LifeHub.Application.Interfaces;
+using LifeHub.Application.Interfaces.Repositories;
+using LifeHub.Application.Interfaces.Services;
+using LifeHub.Application.Interfaces.Utils;
 
 namespace LifeHub.Application.Services
 {

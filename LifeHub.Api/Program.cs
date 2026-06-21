@@ -1,5 +1,6 @@
-using LifeHub.Database;
+using LifeHub.Application;
 using LifeHub.Infrastructure;
+using LifeHub.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -23,8 +24,8 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddDatabase(builder.Configuration);
-
-builder.Services.AddInfrastructure();
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var jwtKey = builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("Jwt:Key not configured");
 var keyBytes = Encoding.UTF8.GetBytes(jwtKey);
@@ -35,7 +36,7 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(options =>
 {
-    options.RequireHttpsMetadata = false; 
+    options.RequireHttpsMetadata = false;
     options.SaveToken = true;
     options.TokenValidationParameters = new TokenValidationParameters
     {

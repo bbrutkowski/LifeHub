@@ -1,6 +1,6 @@
-﻿using LifeHub.Application.Interfaces;
-using LifeHub.Database;
+﻿using LifeHub.Application.Interfaces.Repositories;
 using LifeHub.Domain.Entity;
+using LifeHub.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace LifeHub.Infrastructure.Repository
