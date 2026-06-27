@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace LifeHub.Infrastructure.Security
@@ -46,6 +47,21 @@ namespace LifeHub.Infrastructure.Security
 
             var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
             return Task.FromResult((tokenString, expires));
+        }
+
+        public (string RefreshToken, DateTimeOffset ExpiresAt) GenerateRefreshToken()
+        {
+            var expiresDays = int.TryParse(_configuration["Jwt:RefreshTokenExpiresDays"], out var d) ? d : 30;
+            var refreshToken = Base64UrlEncoder.Encode(RandomNumberGenerator.GetBytes(64));
+            var expiresAt = DateTimeOffset.UtcNow.AddDays(expiresDays);
+
+            return (refreshToken, expiresAt);
+        }
+
+        public string HashRefreshToken(string refreshToken)
+        {
+            var hash = SHA256.HashData(Encoding.UTF8.GetBytes(refreshToken));
+            return Convert.ToHexString(hash);
         }
     }
 }
