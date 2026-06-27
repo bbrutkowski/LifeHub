@@ -27,6 +27,15 @@ namespace LifeHub.Api.Controllers
             return Ok(authResult);
         }
 
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh([FromBody] RefreshTokenRequest request, CancellationToken cancellationToken)
+        {
+            var authResult = await _authService.RefreshAccessToken(request, cancellationToken);
+            if (authResult is null) return Unauthorized(new { message = "Invalid refresh token" });
+
+            return Ok(authResult);
+        }
+
         [HttpPost("resetPassword")]
         public async Task<IActionResult> ResetPassword([FromBody] ForgotPasswordRequest request, CancellationToken cancellationToken)
         {

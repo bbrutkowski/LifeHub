@@ -14,6 +14,7 @@ namespace LifeHub.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRefreshTokenSessionRepository, RefreshTokenSessionRepository>();
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddSingleton<ITokenService, JwtTokenService>();
             services.Configure<EmailSettings>(configuration.GetSection("Email"));
