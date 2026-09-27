@@ -27,7 +27,7 @@ namespace LifeHub.Api.Controllers
             return Ok(authResult);
         }
 
-        [HttpPost("refresh")]
+        [HttpPost("refreshToken")]
         public async Task<IActionResult> Refresh([FromBody] RefreshTokenRequest request, CancellationToken cancellationToken)
         {
             var authResult = await _authService.RefreshAccessToken(request, cancellationToken);

@@ -4,6 +4,7 @@ using LifeHub.Application.Interfaces.Services;
 using LifeHub.Application.Interfaces.Utils;
 using LifeHub.Application.Services;
 using LifeHub.Domain.Entity;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace LifeHub.Tests;
 
@@ -23,7 +24,7 @@ public class AuthServiceTests
                     ("refresh-token", DateTimeOffset.UtcNow.AddDays(10))
                 ]));
 
-        var sut = new AuthService(userRepository, passwordHasher, tokenService, refreshRepository);
+        var sut = new AuthService(userRepository, passwordHasher, tokenService, refreshRepository, NullLogger<AuthService>.Instance);
 
         var result = await sut.Authenticate(new LoginRequest(user.Email, "secret"));
 
@@ -55,7 +56,7 @@ public class AuthServiceTests
                     ("next-refresh-token", DateTimeOffset.UtcNow.AddDays(20))
                 ]));
 
-        var sut = new AuthService(userRepository, passwordHasher, tokenService, refreshRepository);
+        var sut = new AuthService(userRepository, passwordHasher, tokenService, refreshRepository, NullLogger<AuthService>.Instance);
 
         var result = await sut.RefreshAccessToken(new RefreshTokenRequest("old-refresh"));
 
@@ -83,7 +84,7 @@ public class AuthServiceTests
             accessToken: "unused",
             refreshTokens: new Queue<(string RefreshToken, DateTimeOffset ExpiresAt)>());
 
-        var sut = new AuthService(userRepository, passwordHasher, tokenService, refreshRepository);
+        var sut = new AuthService(userRepository, passwordHasher, tokenService, refreshRepository, NullLogger<AuthService>.Instance);
 
         var result = await sut.RefreshAccessToken(new RefreshTokenRequest("unknown-refresh"));
 
