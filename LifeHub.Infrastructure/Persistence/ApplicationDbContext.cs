@@ -37,6 +37,16 @@ namespace LifeHub.Infrastructure.Persistence
                 b.Property(u => u.CreatedAt)
                     .IsRequired();
 
+                b.Property(u => u.AvatarUrl)
+                    .HasMaxLength(512);
+
+                b.Property(u => u.Timezone).HasMaxLength(100);
+                b.Property(u => u.City).HasMaxLength(100);
+                b.Property(u => u.Currency).HasMaxLength(3);
+                b.Property(u => u.DateFormat).HasMaxLength(20);
+                b.Property(u => u.WeekStartsOn).HasMaxLength(10);
+                b.Property(u => u.IsActive).IsRequired().HasDefaultValue(true);
+
                 b.HasIndex(u => u.Username).IsUnique();
                 b.HasIndex(u => u.Email).IsUnique();
             });

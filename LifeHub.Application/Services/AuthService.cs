@@ -28,12 +28,13 @@ public class AuthService(
         var verified = _passwordHasher.Verify(user.PasswordHash, loginRequest.Password);
         if (!verified) return null;
 
-        var (token, expiresAt) = await _tokenService.GenerateToken(user);
+        var sessionId = Guid.NewGuid();
+        var (token, expiresAt) = await _tokenService.GenerateToken(user, sessionId);
         var (refreshToken, refreshTokenExpiresAt) = _tokenService.GenerateRefreshToken();
         var refreshTokenHash = _tokenService.HashRefreshToken(refreshToken);
 
         await _refreshTokenSessionRepository.Add(
-            new RefreshTokenSession(Guid.NewGuid(), user.Id, refreshTokenHash, refreshTokenExpiresAt),
+            new RefreshTokenSession(sessionId, user.Id, refreshTokenHash, refreshTokenExpiresAt),
             cancellationToken);
 
         return new LoginResponse(token, refreshToken, expiresAt, user.Id, user.Username, user.Email);
@@ -50,7 +51,8 @@ public class AuthService(
         var user = await _userRepository.GetById(session.UserId, cancellationToken);
         if (user is null) return null;
 
-        var (token, expiresAt) = await _tokenService.GenerateToken(user);
+        var nextSessionId = Guid.NewGuid();
+        var (token, expiresAt) = await _tokenService.GenerateToken(user, nextSessionId);
         var (nextRefreshToken, nextRefreshTokenExpiresAt) = _tokenService.GenerateRefreshToken();
         var nextTokenHash = _tokenService.HashRefreshToken(nextRefreshToken);
 
@@ -58,7 +60,7 @@ public class AuthService(
         await _refreshTokenSessionRepository.Update(session, cancellationToken);
 
         await _refreshTokenSessionRepository.Add(
-            new RefreshTokenSession(Guid.NewGuid(), user.Id, nextTokenHash, nextRefreshTokenExpiresAt),
+            new RefreshTokenSession(nextSessionId, user.Id, nextTokenHash, nextRefreshTokenExpiresAt),
             cancellationToken);
 
         _logger.LogInformation("Refresh token for user {UserId} has been refreshed. New refresh token expires at {ExpiresAt}.", user.Id, nextRefreshTokenExpiresAt);

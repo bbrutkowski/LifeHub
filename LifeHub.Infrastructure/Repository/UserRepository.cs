@@ -17,12 +17,17 @@ namespace LifeHub.Infrastructure.Repository
 
         public async Task<User?> GetByEmail(string email, CancellationToken cancellationToken = default)
         {
-            return await _db.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
+            return await _db.Users.FirstOrDefaultAsync(u => u.Email == email && u.IsActive, cancellationToken);
         }
 
         public async Task<User?> GetById(Guid id, CancellationToken cancellationToken = default)
         {
-            return await _db.Users.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            return await _db.Users.FirstOrDefaultAsync(x => x.Id == id && x.IsActive, cancellationToken);
+        }
+
+        public async Task<User?> GetByUsername(string username, CancellationToken cancellationToken = default)
+        {
+            return await _db.Users.FirstOrDefaultAsync(x => x.Username == username && x.IsActive, cancellationToken);
         }
 
         public async Task Update(User user, CancellationToken cancellationToken = default)

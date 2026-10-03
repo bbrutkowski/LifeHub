@@ -1,4 +1,5 @@
 using LifeHub.Application;
+using LifeHub.Application.Interfaces.Repositories;
 using LifeHub.Infrastructure;
 using LifeHub.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -49,6 +50,31 @@ builder.Services.AddAuthentication(options =>
         ValidateLifetime = true,
         ClockSkew = TimeSpan.FromMinutes(1)
     };
+    options.Events = new JwtBearerEvents
+    {
+        OnTokenValidated = async context =>
+        {
+            var principal = context.Principal;
+            var userId = principal?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+                ?? principal?.FindFirst("sub")?.Value;
+            var sessionId = principal?.FindFirst("sid")?.Value;
+            if (!Guid.TryParse(userId, out var parsedUserId) || !Guid.TryParse(sessionId, out var parsedSessionId))
+            {
+                context.Fail("The token is not associated with a valid session.");
+                return;
+            }
+
+            await using var scope = context.HttpContext.RequestServices.CreateAsyncScope();
+            var userRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
+            var sessionRepository = scope.ServiceProvider.GetRequiredService<IRefreshTokenSessionRepository>();
+            var user = await userRepository.GetById(parsedUserId, context.HttpContext.RequestAborted);
+            var sessionIsActive = await sessionRepository.IsNotRevoked(parsedSessionId, parsedUserId, context.HttpContext.RequestAborted);
+            if (user is null || !sessionIsActive)
+            {
+                context.Fail("The account or session is no longer active.");
+            }
+        }
+    };
 });
 
 var app = builder.Build();
@@ -61,6 +87,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseCors("AllowAll");
 
 app.UseAuthentication();

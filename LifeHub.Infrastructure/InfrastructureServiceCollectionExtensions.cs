@@ -4,6 +4,7 @@ using LifeHub.Application.Interfaces.Utils;
 using LifeHub.Infrastructure.Email;
 using LifeHub.Infrastructure.Repository;
 using LifeHub.Infrastructure.Security;
+using LifeHub.Infrastructure.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,6 +16,7 @@ namespace LifeHub.Infrastructure
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRefreshTokenSessionRepository, RefreshTokenSessionRepository>();
+            services.AddScoped<IAvatarStorage, AvatarStorage>();
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddSingleton<ITokenService, JwtTokenService>();
             services.Configure<EmailSettings>(configuration.GetSection("Email"));
