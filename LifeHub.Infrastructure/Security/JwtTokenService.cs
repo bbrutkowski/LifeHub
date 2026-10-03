@@ -21,7 +21,7 @@ namespace LifeHub.Infrastructure.Security
             _key = Encoding.UTF8.GetBytes(keyString);
         }
 
-        public Task<(string Token, DateTime ExpiresAt)> GenerateToken(User user)
+        public Task<(string Token, DateTime ExpiresAt)> GenerateToken(User user, Guid? sessionId = null)
         {
             var issuer = _configuration["Jwt:Issuer"] ?? "LifeHub";
             var audience = _configuration["Jwt:Audience"] ?? "LifeHubClients";
@@ -33,6 +33,10 @@ namespace LifeHub.Infrastructure.Security
                 new Claim(JwtRegisteredClaimNames.UniqueName, user.Username),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email)
             };
+            if (sessionId.HasValue)
+            {
+                claims.Add(new Claim("sid", sessionId.Value.ToString()));
+            }
 
             var expires = DateTime.UtcNow.AddMinutes(expiresMinutes);
             var creds = new SigningCredentials(new SymmetricSecurityKey(_key), SecurityAlgorithms.HmacSha256);
