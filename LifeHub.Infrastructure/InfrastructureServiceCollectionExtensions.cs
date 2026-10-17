@@ -16,6 +16,7 @@ namespace LifeHub.Infrastructure
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRefreshTokenSessionRepository, RefreshTokenSessionRepository>();
+            services.AddScoped<IFinanceRepository, FinanceRepository>();
             services.AddScoped<IAvatarStorage, AvatarStorage>();
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddSingleton<ITokenService, JwtTokenService>();

@@ -10,6 +10,7 @@ namespace LifeHub.Application
         {
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IFinanceService, FinanceService>();
 
             return services;
         }
